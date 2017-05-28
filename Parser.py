@@ -30,6 +30,6 @@ def kodi(suchstring):
         return (wert)
     return 0
 
-eingabe = input("nach was soll gesucht werden: ")
+eingabe = "type"
 label = kodi(eingabe)
 print(label)
