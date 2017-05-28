@@ -1,5 +1,4 @@
 import urllib.request
-import re
 
 
 def kodi(suchstring):
