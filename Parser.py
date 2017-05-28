@@ -29,7 +29,12 @@ def kodi(suchstring):
         return (wert)
     return 0
 
-eingabe = input("was: ")    #Frage
+a = {"episode" : "","fanart" : "","file":"","label":"","season":"","showtitle":"","type":"","title":""}
 
-label = kodi(eingabe)
-print(label)
+for i in a:
+    wert = kodi(i)
+    a[i]=wert
+
+print(a)
+
+
