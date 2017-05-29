@@ -19,11 +19,11 @@ def kodi(suchstring,a):
         wert = (a[position + start:position2])  # gibt den Wert des Suchbegriffes aus
         x=0
         while wert.isalnum() is False and x<2:
-            wert = wert.strip("\"")
-            wert = wert.rstrip("}")
-            wert = wert.rstrip("]")
-            wert = wert.lstrip("[")
-            wert = wert.lstrip("{")
+            wert = wert.strip("\"}][{")
+            #wert = wert.rstrip("}")
+            #wert = wert.rstrip("]")
+            #wert = wert.lstrip("[")
+            #wert = wert.lstrip("{")
             x=x+1
         return wert
 
