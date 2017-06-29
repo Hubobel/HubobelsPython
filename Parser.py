@@ -38,25 +38,42 @@ def kodiserie():
         koditems["season"] = ""
         koditems["episode"] = ""
     return
+def kodiurl(url):
+    try:
+        antwort = urllib.request.urlopen(url)
+        b = (antwort.read())
+        a = b.decode("utf-8")
+        return a
+    except:
+        return None
+def ccuurl(url):
+    try:
+        urllib.request.urlopen(url)
+    except:
+        return
+
 lauf = 1
 urlREF = ""
 while lauf < 2:
     koditems = {"episode": "", "fanart": "", "file": "", "label": "", "season": "", "showtitle": "", "type": "",
                 "title": "", "id": "", "width": ""}
     url = "http://10.0.1.102/jsonrpc?request=%7B%22jsonrpc%22:%20%222.0%22,%20%22method%22:%20%22Player.GetItem%22,%20%22params%22:%20%7B%20%22properties%22:%20%5B%22title%22,%20%22album%22,%20%22artist%22,%20%22season%22,%20%22episode%22,%20%22duration%22,%20%22showtitle%22,%20%22tvshowid%22,%20%22thumbnail%22,%20%22file%22,%20%22fanart%22,%20%22streamdetails%22%5D,%20%22playerid%22:%201%20%7D,%20%22id%22:%20%22VideoGetItem%22%7D"
-    antwort = urllib.request.urlopen(url)
-    b = (antwort.read())
-    a = b.decode("utf-8")
-    for i in koditems:
-        wert = kodi(i, a)
-        koditems[i] = wert
-    kodiserie()
-    string = koditems["showtitle"] + " " + koditems["label"] + " " + koditems["season"] + koditems["episode"]
-    string = string.replace("ä", "ae").replace("Ä", "Ae").replace("ö", "oe").replace("Ö", "oe").replace("ü", "ue").replace("Ü", "Ue").replace(" ", "_")
-    if string == "__":
-        string = ""
-    url = 'http://' + ip + ':8181/loksoft.exe?ret=dom.GetObject("' + SV + '").State("' + string + '")'
-    if url != urlREF:
-        urllib.request.urlopen(url)
-        urlREF = url
+    a=kodiurl(url)  #Aufruf der url über eine Funktion um evtl Fehler abzufangen (Fehler = NONE)
+    if a != None:
+        for i in koditems:
+            wert = kodi(i, a)
+            koditems[i] = wert
+        kodiserie()
+        string = koditems["showtitle"] + " " + koditems["label"] + " " + koditems["season"] + koditems["episode"]
+        string = string.replace("ä", "ae").replace("Ä", "Ae").replace("ö", "oe").replace("Ö", "oe").replace("ü", "ue").replace("Ü", "Ue").replace(" ", "_")
+        if string == "__":
+            string = ""
+        url = 'http://' + ip + ':8181/loksoft.exe?ret=dom.GetObject("' + SV + '").State("' + string + '")'
+        print(url)
+        if url != urlREF:
+            ccuurl(url)     #Aufruf der url über eine Funktion um evtl Fehler abzufangen (Fehler = NONE)
+            urlREF = url
+
+    else:
+        print("Fehler")
     time.sleep(10)
