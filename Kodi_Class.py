@@ -2,8 +2,9 @@ import urllib.request
 import time
 
 class kodi():
-    def __init__(self,url):
+    def __init__(self,url="10.0.1.102"):
         self.kodiurl="http://"+url+"/jsonrpc?request=%7B%22jsonrpc%22:%20%222.0%22,%20%22method%22:%20%22Player.GetItem%22,%20%22params%22:%20%7B%20%22properties%22:%20%5B%22title%22,%20%22album%22,%20%22artist%22,%20%22season%22,%20%22episode%22,%20%22duration%22,%20%22showtitle%22,%20%22tvshowid%22,%20%22thumbnail%22,%20%22file%22,%20%22fanart%22,%20%22streamdetails%22%5D,%20%22playerid%22:%201%20%7D,%20%22id%22:%20%22VideoGetItem%22%7D"
+        print(url)
         self.jsonString = self.JSON_holen
 
     @property
@@ -19,7 +20,6 @@ class kodi():
     def Suchen_nach(self, suchstring, json=""):
         if json=="":
             self.jsonString=self.JSON_holen
-            print("neues JSON geholt")
         else:
             self.jsonString=json
         start = len(suchstring) + 3  # berechnet die Anfangsposition des Wertes
@@ -39,7 +39,7 @@ class kodi():
 
     def kodiitem(self, koditems=None):
         if koditems is None:
-            koditems = {"episode": "", "label": "", "season": "", "showtitle": "", "type": "", "title": ""}
+            koditems = {'episode': "", 'label': "", 'season': "", 'showtitle': "", 'type': "", 'title': ""}
         a = self.JSON_holen
         if a != None:
             for i in koditems:
@@ -69,6 +69,6 @@ class kodi():
             return koditems
 
 koditems = {"episode": "", "width": "","label": ""}
-a = kodi("10.0.1.102")
+a = kodi()
 
 print(a.kodiitem())
