@@ -3,7 +3,7 @@ import urllib.request
 class kodi():
     def __init__(self,url="10.0.1.102"):
         self.kodiurl="http://"+url+"/jsonrpc?request=%7B%22jsonrpc%22:%20%222.0%22,%20%22method%22:%20%22Player.GetItem%22,%20%22params%22:%20%7B%20%22properties%22:%20%5B%22title%22,%20%22album%22,%20%22artist%22,%20%22season%22,%20%22episode%22,%20%22duration%22,%20%22showtitle%22,%20%22tvshowid%22,%20%22thumbnail%22,%20%22file%22,%20%22fanart%22,%20%22streamdetails%22%5D,%20%22playerid%22:%201%20%7D,%20%22id%22:%20%22VideoGetItem%22%7D"
-        print(url)
+        print(self.kodiurl)
         self.jsonString = self.JSON_holen
 
     @property
@@ -60,17 +60,21 @@ class kodi():
                     else:
                         koditems["episode"] = "E" + koditems["episode"]
                 elif koditems["type"] == "movie":
-                    koditems["season"] = ""
-                    koditems["episode"] = ""
+                    if "season" in koditems:
+                        koditems["season"] = ""
+                    if "episode" in koditems:
+                        koditems["episode"] = ""
                 elif koditems["type"] == "unknown":
-                    koditems["season"] = ""
-                    koditems["episode"] = ""
+                    if "season" in koditems:
+                        koditems["season"] = ""
+                    if "episode" in koditems:
+                        koditems["episode"] = ""
             if koditems["type"]=="unknown" and koditems["label"]!="":
                 print("Stream?!")
             return koditems
 
-koditems = {"episode": "", "width": "","label": ""}
-a = kodi()
+items = {"episode": "","label": "", "type": ""}
+wz = kodi()
 
-print(a.kodiitem())
-print(a.JSON_holen)
+print(wz.kodiitem(items))
+print(wz.JSON_holen)
