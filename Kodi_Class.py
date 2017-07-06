@@ -1,5 +1,4 @@
 import urllib.request
-import time
 
 class kodi():
     def __init__(self,url="10.0.1.102"):
@@ -66,9 +65,12 @@ class kodi():
                 elif koditems["type"] == "unknown":
                     koditems["season"] = ""
                     koditems["episode"] = ""
+            if koditems["type"]=="unknown" and koditems["label"]!="":
+                print("Stream?!")
             return koditems
 
 koditems = {"episode": "", "width": "","label": ""}
 a = kodi()
 
 print(a.kodiitem())
+print(a.JSON_holen)
