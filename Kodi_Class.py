@@ -45,35 +45,25 @@ class kodi():
                 string = self.Suchen_nach(i, a)
                 if type(string)==str:
                     string = string.replace("ä", "ae").replace("Ä", "Ae").replace("ö", "oe").replace("Ö", "oe").replace(
-                        "ü", "ue").replace("Ü", "Ue").replace(" ", "_")
+                        "ü", "ue").replace("Ü", "Ue").replace(" ", "_").replace("-1","").replace("_"," ")
                 elif string == None:
                     string =""
                 koditems[i] = string
-            if "type" in koditems:
-                if koditems["type"] == "episode":
-                    if len(koditems["season"]) == 1:
-                        koditems["season"] = "S0" + koditems["season"]
-                    else:
-                        koditems["season"] = "S" + koditems["season"]
-                    if len(koditems["episode"]) == 1:
-                        koditems["episode"] = "E0" + koditems["episode"]
-                    else:
-                        koditems["episode"] = "E" + koditems["episode"]
-                elif koditems["type"] == "movie":
-                    if "season" in koditems:
-                        koditems["season"] = ""
-                    if "episode" in koditems:
-                        koditems["episode"] = ""
-                elif koditems["type"] == "unknown":
-                    if "season" in koditems:
-                        koditems["season"] = ""
-                    if "episode" in koditems:
-                        koditems["episode"] = ""
-            if koditems["type"]=="unknown" and koditems["label"]!="":
-                print("Stream?!")
+            if "type" in koditems == "episode":
+                if len("season" in koditems) == 1:
+                    koditems["season"] = "S0" + koditems["season"]
+                else:
+                    koditems["season"] = "S" + koditems["season"]
+                if len(koditems["episode"]) == 1:
+                    koditems["episode"] = "E0" + koditems["episode"]
+                else:
+                    koditems["episode"] = "E" + koditems["episode"]
+            if "type" in koditems and "label" in koditems:
+                if koditems["type"] =="unknown" and koditems["label"] !="":
+                    koditems["type"]="Stream"
             return koditems
 
-items = {"episode": "","label": "", "type": ""}
+items = {"episode": "","width": "","duration":""}
 wz = kodi()
 
 print(wz.kodiitem(items))
