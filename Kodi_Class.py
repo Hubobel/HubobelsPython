@@ -3,7 +3,6 @@ import urllib.request
 class kodi():
     def __init__(self,url="10.0.1.102"):
         self.kodiurl="http://"+url+"/jsonrpc?request=%7B%22jsonrpc%22:%20%222.0%22,%20%22method%22:%20%22Player.GetItem%22,%20%22params%22:%20%7B%20%22properties%22:%20%5B%22title%22,%20%22album%22,%20%22artist%22,%20%22season%22,%20%22episode%22,%20%22duration%22,%20%22showtitle%22,%20%22tvshowid%22,%20%22thumbnail%22,%20%22file%22,%20%22fanart%22,%20%22streamdetails%22%5D,%20%22playerid%22:%201%20%7D,%20%22id%22:%20%22VideoGetItem%22%7D"
-        print(self.kodiurl)
         self.jsonString = self.JSON_holen
 
     @property
@@ -21,14 +20,12 @@ class kodi():
             self.jsonString=self.JSON_holen
         else:
             self.jsonString=json
-        start = len(suchstring) + 3  # berechnet die Anfangsposition des Wertes
-        ende = len(self.jsonString)  # gibt die Gesamtlänge der URL Antwort an
-        position = self.jsonString.find("\"" + suchstring, 46,
-                                        ende)  # sucht in der gesamten URL Antwort nach dem Suchbegriff und ermittelt dessen Position im String (Anfang)
+        start = len(suchstring) + 3
+        ende = len(self.jsonString)
+        position = self.jsonString.find("\"" + suchstring, 46,ende)
         if position > 0:
-            position2 = self.jsonString.find(",\"", position,
-                                             ende)  # sucht anhand der Anfangspos. des Suchstrings nach dem Ende des dazugehörigen Wertes (endet mit ,")
-            wert = (self.jsonString[position + start:position2])  # gibt den Wert des Suchbegriffes aus
+            position2 = self.jsonString.find(",\"", position,ende)
+            wert = (self.jsonString[position + start:position2])
             x = 0
             while wert.isalnum() is False and x < 2:
                 wert = wert.strip("\"}][{")
@@ -58,13 +55,14 @@ class kodi():
                     koditems["episode"] = "E0" + koditems["episode"]
                 else:
                     koditems["episode"] = "E" + koditems["episode"]
-            if "type" in koditems and "label" in koditems:
-                if koditems["type"] =="unknown" and koditems["label"] !="":
+            if "type" in koditems:
+                test = self.Suchen_nach("label", a)
+                if koditems["type"] =="unknown" and test !="":
                     koditems["type"]="Stream"
             return koditems
 
-items = {"episode": "","width": "","duration":""}
+items = {"episode": "","width": "","duration":"","type":""}
 wz = kodi()
 
-print(wz.kodiitem(items))
+print(wz.kodiitem())
 print(wz.JSON_holen)
