@@ -62,7 +62,12 @@ class kodi():
             return koditems
 
 items = {"episode": "","width": "","duration":"","type":""}
-wz = kodi()
 
+sz = kodi("10.0.1.101")
+wz = kodi("10.0.1.102")
+
+print(sz.kodiitem())
+print(sz.JSON_holen)
 print(wz.kodiitem())
 print(wz.JSON_holen)
+
