@@ -19,6 +19,7 @@ def modification_date(filename):
 
 if os.path.isdir('mpg')!= True:
     os.makedirs('mpg')
+    print ('Downloadverzeichniss created!!!')
 
 try:
     os.rename('mpg/heute.pdf', 'mpg/heute1.pdf')
@@ -26,8 +27,10 @@ try:
     download(url)
     x = os.stat('mpg/heute.pdf')
     x = x.st_size
+    x1 = str(x)
     y = os.stat('mpg/heute1.pdf')
     y = y.st_size
+    y1 = str(y)
     if x != y:
         print("die Dateien 'heute' sind ungleich")
         os.system('s-nail -a mpg/heute.pdf -s "Alpha-MPG-Vertretungsliste" schneeschieben@web.de')
@@ -35,10 +38,10 @@ try:
         print("Es gibt keine neuen Mals mit 'heute'")
         d = modification_date('mpg/heute.pdf')
         d = d.strftime('%H:%M:%S')
-        print("heute: " + d )
+        print("heute: " + d + ' '+ x1 + ' Bytes')
         d = modification_date('mpg/heute1.pdf')
         d = d.strftime('%H:%M:%S')
-        print("heute1: " + d)
+        print("heute1: " + d + ' '+ y1 + ' Bytes')
 except FileNotFoundError:
     print("File Heute.PDF not found")
     print("Will try to download it from the MPG-Server")
@@ -51,8 +54,10 @@ try:
     download(url)
     x = os.stat('mpg/morgen.pdf')
     x = x.st_size
+    x1 = str(x)
     y = os.stat('mpg/morgen1.pdf')
     y = y.st_size
+    y1 = str(y)
     if x != y:
         print("die Dateien 'morgen' sind ungleich")
         os.system('s-nail -a mpg/morgen.pdf -s "Alpha-MPG-Vertretungsliste" schneeschieben@web.de')
@@ -61,10 +66,10 @@ try:
 
         d= modification_date('mpg/morgen.pdf')
         d = d.strftime('%H:%M:%S')
-        print ("morgen: " + d)
+        print("morgen: " + d + ' ' + x1 + ' Bytes')
         d = modification_date('mpg/morgen1.pdf')
         d = d.strftime('%H:%M:%S')
-        print("morgen1: " + d)
+        print("morgen1: " + d + ' ' + x1 + ' Bytes')
 except FileNotFoundError:
     print("File Morgen.PDF not found")
     print("Will try to download it from the MPG-Server")
