@@ -7,19 +7,16 @@ import os
 
 pfad = os.path.dirname(__file__)
 
-def Nachricht(fradress, toadress, bccs, sub, attach):
+def Nachricht(fradress, toadress, bccs, sub,body, attach):
     fromaddr = fradress
     toaddr = toadress
 
-
-
-    fobj = open(pfad + "/mpg/pass.txt")
+    fobj = open(pfad + "/mpg/pass.txt")     #Passwort für den Gmailaccount laden
     passw = []
     for line in fobj:
         a = line.rstrip()
         passw.append(a)
     fobj.close()
-
     pwd = passw[0]
 
     msg = MIMEMultipart()
@@ -27,8 +24,6 @@ def Nachricht(fradress, toadress, bccs, sub, attach):
     msg['From'] = fromaddr
     msg['To'] = toaddr
     msg['Subject'] = sub
-
-    body = 'Hello World again and again and again'
 
     msg.attach(MIMEText(body, 'plain'))
 
@@ -53,16 +48,17 @@ def Nachricht(fradress, toadress, bccs, sub, attach):
     server.quit()
     return
 
+
+fobj = open(pfad + "/mpg/adressen.txt")
 fradress='carsten.richter77@gmail.com'
 toadress='carsten.richter77@gmail.com'
 sub='das ist der finale Standalonetest'
 anhang = ['adressen.txt','heute.pdf']
-
-fobj = open(pfad + "/mpg/adressen.txt")
+body = 'lalaland_Teil2'
 bcc = []
 for line in fobj:
     a = line.rstrip()
     bcc.append(a)
 fobj.close()
 
-Nachricht (fradress,toadress,bcc,sub,anhang)
+Nachricht (fradress,toadress,bcc,sub,body,anhang)
