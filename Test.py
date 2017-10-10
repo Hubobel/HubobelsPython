@@ -1,81 +1,49 @@
-class VerwalteterGeldbetrag:
-    def __init__(self, anfangsbetrag):
-        self.Betrag = anfangsbetrag
-    def einzahlenMoeglich(self, betrag):
-        return True
-    def auszahlenMoeglich(self, betrag):
-        return True
-    def einzahlen(self, betrag):
-        if betrag < 0 or not self.einzahlenMoeglich(betrag):
-            return False
-        else:
-            self.Betrag += betrag
-            return True
-    def auszahlen(self, betrag):
-        if betrag < 0 or not self.auszahlenMoeglich(betrag):
-            return False
-        else:
-            self.Betrag -= betrag
-            return True
-    def zeige(self):
-        #print("Betrag: {:.2f}".format(self.Betrag))
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 
-class AllgemeinesKonto(VerwalteterGeldbetrag):
-    def __init__(self,kundendaten, kontostand):
-        super().__init__(kontostand)
-        self.Kundendaten = kundendaten
-    def geldtransfer(self, ziel, betrag):
-        if self.auszahlenMoeglich(betrag) and ziel.einzahlenMoeglich(betrag):
-            self.auszahlen(betrag)
-            ziel.einzahlen(betrag)
-            return True
-        else:
-            return False
-    def zeige(self):
-        self.Kundendaten.zeige()
-        VerwalteterGeldbetrag.zeige(self)
+fromaddr = 'carsten.richter77@gmail.com'
+bcc = ['schneeschieben@web.de', 'carsten@hubobel.de', 'johanna.richter.vogt@googlemail.com', 'crichter@soka-bau.de']
+toaddr = 'carsten.richter77@gmail.com'
+pwd = 'xxxxxxxx'
 
-class AllgemeinesKontoMitTagesumsatz(AllgemeinesKonto):
-    def __init__(self, kundendaten, kontostand, max_tagesumsatz=1500):
-        super().__init__(kundendaten, kontostand)
-        self.MaxTagesumsatz = max_tagesumsatz
-        self.UmsatzHeute = 0.0
-    def transferMoeglich(self, betrag):
-        return (self.UmsatzHeute + betrag <= self.MaxTagesumsatz)
-    def auszahlenMoeglich(self, betrag):
-        return self.transferMoeglich(betrag)
-    def einzahlenMoeglich(self, betrag):
-        return self.transferMoeglich(betrag)
-    def einzahlen(self, betrag):
-        if AllgemeinesKonto.einzahlen(self, betrag):
-            self.UmsatzHeute += betrag
-            return True
-        else:
-            return False
-    def auszahlen(self, betrag):
-        if AllgemeinesKonto.auszahlen(self, betrag):
-            self.UmsatzHeute += betrag
-            return True
-        else:
-            return False
-    def zeige(self):
-        AllgemeinesKonto.zeige(self)
-        #print("Heute schon {:.2f} von {:.2f} Euro umgesetzt".format(self.UmsatzHeute, self.MaxTagesumsatz))
+msg = MIMEMultipart()
 
-class GirokontoKundendaten:
-    def __init__(self, inhaber, kontonummer):
-        self.Inhaber = inhaber
-        self.Kontonummer = kontonummer
-    def zeige(self):
-        print("Inhaber:", self.Inhaber)
-        print("Kontonummer:", self.Kontonummer)
+msg['From'] = fromaddr
+msg['To'] = toaddr
+msg['Subject'] = 'Hello World of Python-test2'
 
-class GirokontoMitTagesumsatz(AllgemeinesKontoMitTagesumsatz):
-    def __index__(self, inhaber, kontonummer, kontostand, max_tagesumsatz=1500):
-        kundendaten = GirokontoKundendaten(inhaber, kontonummer)
-        super().__init__(kundendaten, kontostand, max_tagesumsatz)
 
-k1=GirokontoMitTagesumsatz("Carsten", 5678, 1234.78)
-k2=GirokontoMitTagesumsatz("Johanna", 1234, 1000.78)
-k1.geldtransfer(k2, 1000)
-k2.zeige()
+body = 'Hello World again and again and again'
+
+msg.attach(MIMEText(body, 'plain'))
+
+filename = 'heute.pdf'
+attachment = open('mpg/heute.pdf','rb')
+
+part = MIMEBase('application','octet-stream')
+part.set_payload((attachment).read())
+encoders.encode_base64(part)
+part.add_header('Content-Disposition','attachment; filename= %s'% filename)
+
+msg.attach(part)
+
+filename = 'morgen.pdf'
+attachment = open('mpg/morgen.pdf','rb')
+
+part = MIMEBase('application','octet-stream')
+part.set_payload((attachment).read())
+encoders.encode_base64(part)
+part.add_header('Content-Disposition','attachment; filename= %s'% filename)
+
+msg.attach(part)
+
+server = smtplib.SMTP('smtp.gmail.com', 587)
+server.starttls()
+server.login(fromaddr,pwd)
+text = msg.as_string()
+server.sendmail(fromaddr, bcc, text)
+server.quit()
+
