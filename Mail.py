@@ -13,7 +13,9 @@ jetzt = int(time.strftime('%j'))
 tag = time.strftime('%d')
 
 ferien = False
+ferien_morgen = False
 feiertag = False
+feiertag_morgen = False
 
 if os.path.isdir(pfad+'/mpg')!= True:   #prüfen, ob das UNTERverzeichniss /mpg bereits existiert
     os.makedirs(pfad+'/mpg')
@@ -32,7 +34,7 @@ if int(tag) == 1:       #Update einmal pro Monat
     with open(pfad + '/mpg/json_feiertage.data', 'w') as outfile:
         json.dump(data_feiertage, outfile)
 
-if os.path.isfile(pfad+'/mpg/json_ferien.data')!= True:     #Download der json, falls diese lokal nicht existieren
+if os.path.isfile(pfad+'/mpg/json_ferien.data')!= True:     #Download der jsons, falls diese lokal nicht existieren
     print('The json_xxx.datas not found, will try to download them from the API')
 
     resp_ferien = requests.get(url_ferien)
@@ -65,6 +67,9 @@ while x <a:
 
     if jetzt <= ende and jetzt >= beginn:
         ferien = True
+        ferien_morgen = True
+    if jetzt-1 == beginn:
+        ferien_morgen = True
 
     x = x+1
 
@@ -82,11 +87,24 @@ while x <a:
 
     if jetzt <= ende and jetzt >= beginn:
         feiertag = True
-
+    if jetzt-1 == beginn:
+        feiertag_morgen = True
     x = x+1
 
 print('Es sind Ferien: '+ str(ferien))
+print('Es sind morgen Ferien: '+ str(ferien_morgen))
 print('Es ist ein Feiertag: '+str(feiertag))
+print('Es ist morgen ein Feiertag: '+str(feiertag_morgen))
+
+feiertag=False
+feiertag_morgen=False
+ferien_morgen=False
+ferien=False
+############################################################
+if ferien or ferien_morgen:
+    quit()
+if feiertag or feiertag_morgen:
+    quit()
 
 def download(url):
     #return None
@@ -114,9 +132,10 @@ try:
     y = os.stat(pfad+'/mpg/heute1.pdf')
     y = y.st_size
     y1 = str(y)
+    mail = 0
+
     if x != y:
-        print("die Dateien 'heute' sind ungleich")
-        os.system('s-nail -a mpg/heute.pdf -s "Alpha-MPG-Vertretungsliste" schneeschieben@web.de')
+        mail=mail+1
     else:
         print("Es gibt keine neuen Mals mit 'heute'")
         d = modification_date(pfad+'/mpg/heute.pdf')
@@ -142,8 +161,7 @@ try:
     y = y.st_size
     y1 = str(y)
     if x != y:
-        print("die Dateien 'morgen' sind ungleich")
-        os.system('s-nail -a mpg/morgen.pdf -s "Alpha-MPG-Vertretungsliste" schneeschieben@web.de')
+        mail = mail + 2
     else:
         print("Es gibt keine neuen Mails mit 'morgen'")
 
@@ -159,6 +177,13 @@ except FileNotFoundError:
     url = 'morgen'
     download(url)
 
-print ("Tats. Dateiposition:", __file__)
-pfad = os.path.dirname(__file__)
-print (pfad)
+if mail == 1:
+    befehl = 's-nail -a ' + pfad + '/mpg/heute.pdf -s "Heute-MPG-Vertretungsliste" schneeschieben@web.de'
+    os.system(befehl)
+if mail == 2:
+    befehl = 's-nail -a ' + pfad + '/mpg/morgen.pdf -s "Morgen-MPG-Vertretungsliste" schneeschieben@web.de'
+    os.system(befehl)
+if mail == 3:
+    befehl = 's-nail -a ' + pfad + '/mpg/heute.pdf -a ' + pfad + '/mpg/morgen.pdf -s "Alpha-MPG-Vertretungsliste" schneeschieben@web.de'
+    os.system(befehl)
+
