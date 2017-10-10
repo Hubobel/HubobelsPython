@@ -2,9 +2,11 @@ import requests
 import os
 import datetime
 
+pfad = os.path.dirname(__file__)
+
 def download(url):
     #return None
-    filename = 'mpg/'+url+'.pdf'
+    filename = pfad+'/mpg/'+url+'.pdf'
     url = 'http://www.mpglu.de/vps/'+url+'.pdf'
     req = requests.get(url, auth=('schueler', 'Ing8gresk'))
     file = open(filename, 'wb')
@@ -17,18 +19,18 @@ def modification_date(filename):
     t = os.path.getmtime(filename)
     return datetime.datetime.fromtimestamp(t)
 
-if os.path.isdir('mpg')!= True:
-    os.makedirs('mpg')
-    print ('Downloadverzeichniss created!!!')
+if os.path.isdir(pfad+'/mpg')!= True:
+    os.makedirs(pfad+'/mpg')
+    print ('Downloadverzeichniss bei '+pfad +' /mpg/ created!!!')
 
 try:
-    os.rename('mpg/heute.pdf', 'mpg/heute1.pdf')
+    os.rename(pfad + '/mpg/heute.pdf', pfad +'/mpg/heute1.pdf')
     url = 'heute'
     download(url)
-    x = os.stat('mpg/heute.pdf')
+    x = os.stat(pfad+'/mpg/heute.pdf')
     x = x.st_size
     x1 = str(x)
-    y = os.stat('mpg/heute1.pdf')
+    y = os.stat(pfad+'/mpg/heute1.pdf')
     y = y.st_size
     y1 = str(y)
     if x != y:
@@ -36,10 +38,10 @@ try:
         os.system('s-nail -a mpg/heute.pdf -s "Alpha-MPG-Vertretungsliste" schneeschieben@web.de')
     else:
         print("Es gibt keine neuen Mals mit 'heute'")
-        d = modification_date('mpg/heute.pdf')
+        d = modification_date(pfad+'/mpg/heute.pdf')
         d = d.strftime('%H:%M:%S')
         print("heute: " + d + ' '+ x1 + ' Bytes')
-        d = modification_date('mpg/heute1.pdf')
+        d = modification_date(pfad+'/mpg/heute1.pdf')
         d = d.strftime('%H:%M:%S')
         print("heute1: " + d + ' '+ y1 + ' Bytes')
 except FileNotFoundError:
@@ -49,13 +51,13 @@ except FileNotFoundError:
     download(url)
 
 try:
-    os.rename('mpg/morgen.pdf', 'mpg/morgen1.pdf')
+    os.rename(pfad+'/mpg/morgen.pdf', pfad+'/mpg/morgen1.pdf')
     url = 'morgen'
     download(url)
-    x = os.stat('mpg/morgen.pdf')
+    x = os.stat(pfad+'/mpg/morgen.pdf')
     x = x.st_size
     x1 = str(x)
-    y = os.stat('mpg/morgen1.pdf')
+    y = os.stat(pfad+'/mpg/morgen1.pdf')
     y = y.st_size
     y1 = str(y)
     if x != y:
@@ -64,10 +66,10 @@ try:
     else:
         print("Es gibt keine neuen Mails mit 'morgen'")
 
-        d= modification_date('mpg/morgen.pdf')
+        d= modification_date(pfad+'/mpg/morgen.pdf')
         d = d.strftime('%H:%M:%S')
         print("morgen: " + d + ' ' + x1 + ' Bytes')
-        d = modification_date('mpg/morgen1.pdf')
+        d = modification_date(pfad+'/mpg/morgen1.pdf')
         d = d.strftime('%H:%M:%S')
         print("morgen1: " + d + ' ' + x1 + ' Bytes')
 except FileNotFoundError:
@@ -76,4 +78,6 @@ except FileNotFoundError:
     url = 'morgen'
     download(url)
 
-
+print ("Tats. Dateiposition:", __file__)
+pfad = os.path.dirname(__file__)
+print (pfad)
