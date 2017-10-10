@@ -5,15 +5,22 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 fromaddr = 'carsten.richter77@gmail.com'
-bcc = ['schneeschieben@web.de', 'carsten@hubobel.de', 'johanna.richter.vogt@googlemail.com', 'crichter@soka-bau.de']
 toaddr = 'carsten.richter77@gmail.com'
-pwd = 'xxxxxxxx'
+
+fobj = open("mpg/adressen.txt")
+bcc =[]
+for line in fobj:
+    a = line.rstrip()
+    bcc.append(a)
+fobj.close()
+
+pwd = bcc[0]
 
 msg = MIMEMultipart()
 
 msg['From'] = fromaddr
 msg['To'] = toaddr
-msg['Subject'] = 'Hello World of Python-test2'
+msg['Subject'] = 'Hello World of Python-LISTENtest'
 
 
 body = 'Hello World again and again and again'
@@ -44,6 +51,6 @@ server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
 server.login(fromaddr,pwd)
 text = msg.as_string()
-server.sendmail(fromaddr, bcc, text)
+server.sendmail(fromaddr, bcc[1:], text)
 server.quit()
 
