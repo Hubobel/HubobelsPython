@@ -26,13 +26,13 @@ if int(tag) == 1:       #Update einmal pro Monat
     data_ferien = resp_ferien.json()
     data_feiertage = resp_feiertage.json()
 
-    with open(pfad + '/json_ferien.data', 'w') as outfile:
+    with open(pfad + '/mpg/json_ferien.data', 'w') as outfile:
         json.dump(data_ferien, outfile)
 
-    with open(pfad + '/json_feiertage.data', 'w') as outfile:
+    with open(pfad + '/mpg/json_feiertage.data', 'w') as outfile:
         json.dump(data_feiertage, outfile)
 
-if os.path.isfile(pfad+'/json_ferien.data')!= True:     #Download der json, falls diese lokal nicht existieren
+if os.path.isfile(pfad+'/mpg/json_ferien.data')!= True:     #Download der json, falls diese lokal nicht existieren
     print('The json_xxx.datas not found, will try to download them from the API')
 
     resp_ferien = requests.get(url_ferien)
@@ -40,15 +40,15 @@ if os.path.isfile(pfad+'/json_ferien.data')!= True:     #Download der json, fall
     data_ferien = resp_ferien.json()
     data_feiertage = resp_feiertage.json()
 
-    with open(pfad+'/json_ferien.data','w') as outfile:
+    with open(pfad+'/mpg/json_ferien.data','w') as outfile:
         json.dump(data_ferien, outfile)
 
-    with open(pfad+'/json_feiertage.data','w') as outfile:
+    with open(pfad+'/mpg/json_feiertage.data','w') as outfile:
         json.dump(data_feiertage, outfile)
 
-with open(pfad+'/json_ferien.data') as file:
+with open(pfad+'/mpg/json_ferien.data') as file:
     data_ferien=json.load(file)
-with open(pfad+'/json_feiertage.data') as file:
+with open(pfad+'/mpg/json_feiertage.data') as file:
     data_feiertage=json.load(file)
 
 a= len(data_ferien['daten'])
