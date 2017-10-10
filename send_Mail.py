@@ -7,7 +7,7 @@ from email import encoders
 fromaddr = 'carsten.richter77@gmail.com'
 bcc = ['schneeschieben@web.de', 'carsten@hubobel.de', 'johanna.richter.vogt@googlemail.com', 'crichter@soka-bau.de']
 toaddr = 'carsten.richter77@gmail.com'
-pwd = 'PL19zPL19z'
+pwd = 'xxxxxxxx'
 
 msg = MIMEMultipart()
 
