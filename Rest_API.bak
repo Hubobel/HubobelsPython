@@ -1,0 +1,74 @@
+import random
+from flask import Flask, jsonify,make_response
+import pymysql
+app = Flask(__name__)
+def Update():
+    connection = pymysql.connect(db="hubobel",
+                           user="hubobel",
+                           passwd="polier2003",
+                           host='10.0.1.59',charset='utf8')
+    cursor = connection.cursor()
+    sql="SELECT * FROM facts"
+    resp=cursor.execute(sql)
+    x=cursor.fetchall()
+    fact=dict(x)
+    cursor.close()
+    connection.close()
+    a=len(fact)
+    return fact,a
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Nicht unterstuetzt'}), 404)
+@app.route('/')
+def index():
+    fact,a = Update()
+    fact={
+          'POST:api.hubobel.de/facts.....':'Uebersicht ueber alle verfuegbaren Facts mit ihrer ID',
+          'POST: api.hubobel.de/facts/<ID>.....':'JSON des abgefragten Facts',
+          'POST: api.hubobel.de/facts/9999.....':'ein zufaellig ausgewaehlter Fact wird im JSON zurueck gegeben',
+        'facts':a}
+    return jsonify({'eine REST-API von hubobel.de Methoden/Funktionen':fact})
+@app.route('/facts', methods=['GET'])
+def get_tasks():
+    fact, a = Update()
+    return jsonify({'facts': fact})
+@app.route('/facts/<int:task_id>', methods=['GET'])
+def get_task(task_id):
+    connection = pymysql.connect(db="hubobel",
+                                 user="hubobel",
+                                 passwd="polier2003",
+                                 host='10.0.1.59', charset='utf8')
+    cursor = connection.cursor()
+    sql = "SELECT * FROM facts ORDER BY nr DESC"
+    resp = cursor.execute(sql)
+    x = int(resp)
+    if x<task_id:
+        return jsonify({'error':"Auch Chuck Norris FACTS sind begrenzt"})
+    sql_q = "SELECT * FROM facts WHERE nr like '" + str(task_id) + "'"
+    cursor.execute(sql_q)
+    resp = cursor.fetchall()
+    resp = (resp[0][1])
+    cursor.close()
+    connection.close()
+    return jsonify({'fact': resp})
+@app.route('/zufall', methods=['GET'])
+def zufall():
+    connection = pymysql.connect(db="hubobel",
+                                 user="hubobel",
+                                 passwd="polier2003",
+                                 host='10.0.1.59', charset='utf8')
+    cursor = connection.cursor()
+    sql = "SELECT * FROM facts ORDER BY nr DESC"
+    resp = cursor.execute(sql)
+    x = int(resp)
+    ran = random.randint(1, x)
+    print(x, ran)
+    sql_q = "SELECT * FROM facts WHERE nr like '" + str(ran) + "'"
+    resp = cursor.execute(sql_q)
+    resp = cursor.fetchall()
+    resp = (resp[0][1])
+    cursor.close()
+    connection.close()
+    return jsonify({ran: resp})
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')

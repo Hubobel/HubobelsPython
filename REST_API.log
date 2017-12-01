@@ -1,0 +1,98 @@
+[2017-Nov-11 18:32] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-11 18:32] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-11 18:34] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-11 18:38] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-11 18:38] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-11 18:38] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-11 18:38] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-11 18:38] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-11 18:38] 127.0.0.1 GET http /facts/12? 200 OK
+[2017-Nov-11 18:38] 127.0.0.1 GET http /facts/12? 200 OK
+[2017-Nov-11 18:38] 127.0.0.1 GET http /facts/12? 200 OK
+[2017-Nov-11 18:38] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-11 18:42] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-11 18:42] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-11 18:42] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-11 18:42] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-11 18:42] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-11 18:42] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-11 18:42] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-11 18:42] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-11 18:43] 127.0.0.1 GET http /facts/12? 200 OK
+[2017-Nov-11 18:44] 127.0.0.1 GET http /facts/12? 200 OK
+[2017-Nov-11 18:45] 127.0.0.1 GET http /facts/12? 200 OK
+[2017-Nov-11 18:45] 127.0.0.1 GET http /facts/12? 200 OK
+[2017-Nov-11 18:45] 127.0.0.1 GET http /facts/13? 200 OK
+[2017-Nov-11 18:45] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-11 18:46] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-11 18:46] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-11 18:46] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-11 18:46] 127.0.0.1 GET http /facts/10? 200 OK
+[2017-Nov-11 18:46] 127.0.0.1 GET http /facts/10? 200 OK
+[2017-Nov-11 18:46] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-11 18:46] 127.0.0.1 GET http /facts/85? 200 OK
+[2017-Nov-11 18:46] 127.0.0.1 GET http /facts/89? 200 OK
+[2017-Nov-11 18:47] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-11 18:47] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-11 18:47] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-11 18:47] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-11 18:47] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-11 18:47] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-11 18:47] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-11 18:47] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-11 18:47] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-11 18:47] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-11 21:48] 81.169.144.135 GET http /facts/9999? 200 OK[2017-Nov-12 10:30] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-12 10:31] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-12 10:31] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-12 10:31] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-14 17:16] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-14 17:16] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-14 17:16] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-14 17:16] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-14 17:17] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-14 17:17] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:17] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:17] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:17] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:17] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:18] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:18] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:18] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:18] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:18] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:19] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:19] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:24] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:24] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-14 17:24] 127.0.0.1 GET http /facts/10? 200 OK
+[2017-Nov-14 17:24] 127.0.0.1 GET http /facts/10? 200 OK
+[2017-Nov-14 17:25] 127.0.0.1 GET http /facts/10? 200 OK
+[2017-Nov-14 17:25] 127.0.0.1 GET http /facts/12? 200 OK
+[2017-Nov-14 17:25] 127.0.0.1 GET http /facts/12? 200 OK
+[2017-Nov-14 17:25] 127.0.0.1 GET http /facts/12? 200 OK
+[2017-Nov-14 17:25] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-14 17:25] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:25] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:25] 127.0.0.1 GET http /facts/9999? 200 OK
+[2017-Nov-14 17:25] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-14 17:25] 127.0.0.1 GET http /facts/89? 200 OK
+[2017-Nov-14 17:25] 127.0.0.1 GET http /facts/86? 200 OK
+[2017-Nov-14 17:33] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-14 17:33] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-14 17:34] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-14 17:34] 127.0.0.1 GET http /facts/15? 200 OK
+[2017-Nov-14 17:34] 127.0.0.1 GET http /facts/15? 200 OK
+[2017-Nov-14 17:55] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-14 17:55] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-14 17:55] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-14 17:55] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-14 17:55] 127.0.0.1 GET http /facts/12? 200 OK
+[2017-Nov-14 17:55] 127.0.0.1 GET http /facts/19? 200 OK
+[2017-Nov-14 18:43] 127.0.0.1 GET http /facts/19? 200 OK
+[2017-Nov-14 18:43] 127.0.0.1 GET http /facts/? 404 NOT FOUND
+[2017-Nov-14 18:43] 127.0.0.1 GET http /facts? 200 OK
+[2017-Nov-14 18:44] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-14 18:44] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-14 18:45] 127.0.0.1 GET http /? 200 OK
+[2017-Nov-14 18:46] 127.0.0.1 GET http /? 200 OK
