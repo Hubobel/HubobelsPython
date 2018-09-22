@@ -32,7 +32,8 @@ laenge_start=laenge()
 suchstring=[]
 fobj = open(pfad+"/toFind.txt")
 for line in fobj:
-    suchstring.append(line.rstrip())
+    if line.rstrip()!='':
+        suchstring.append(line.rstrip())
 fobj.close()
 
 
@@ -68,7 +69,12 @@ for i in data['content']:
                     sql_q = "SELECT * FROM facts WHERE fact like '%" + line + "%'"
                     resp = cursor.execute(sql_q)
                     if resp == 0:
-                        resp = cursor.execute(sql)
+                        try:
+                            resp = cursor.execute(sql)
+                        except:
+                            bericht='Es gab ein Problem beim Schreiben des facts in die DB'
+                            tb.send_message(chat_id, bericht)
+
                     connection.commit()
                     cursor.close()
                     connection.close()
@@ -102,6 +108,27 @@ if ergebniss>0:
             ' in deinen News!\nEs sind nun '+str(unreadcount)+' ungelesene Nachrichten in deinen News.'
     tb.send_message(chat_id, bericht)
 
+#url = 'http://hubobel.de/tt-rss/api/'
+#datas = '{"op":"login","user":"admin","password":"password"}'
+#resp = requests.post(url,datas)
+#data = resp.json()
+#id= str(data['content']['session_id'])
+datas = '{"sid":"'+id+'","op":"getHeadlines","feed_id":-1}'
+resp = requests.post(url,datas)
+data = resp.json()
+data=data['content']
+a=0
+ids=[]
+for i in data:
+    if i['unread']==False:
+        ids.append(i['id'])
+idstring=str(ids)
+idstring=idstring.replace('[',"")
+idstring=idstring.replace(']',"")
+idstring=idstring.replace(' ','')
+datas = '{"sid":"'+id+'","op":"updateArticle","article_ids":"'+idstring+'","mode":0,"field":0}'
+resp = requests.post(url,datas)
+data = resp.json()
 
 
 
