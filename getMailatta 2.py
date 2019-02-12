@@ -26,6 +26,7 @@ PASSWORD = "PL19zPL19z"
 TOKEN='312534798:AAFbMjS-tfd2BiZ_j3NEZuQYKwzACMcioVo'
 Chat_ID='322673713'
 SAVEDIR = "/home/carsten"
+SAVEDIR = ""
 
 if telegram:
     tb = telebot.TeleBot(TOKEN)

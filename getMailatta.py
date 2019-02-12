@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+mv#!/usr/bin/env python
 
 import poplib
 import email

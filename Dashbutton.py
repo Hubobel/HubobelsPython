@@ -3,6 +3,7 @@
 import datetime
 import logging
 import urllib2
+#import scapy
 
 # Constants
 timespan_threshhold = 3
