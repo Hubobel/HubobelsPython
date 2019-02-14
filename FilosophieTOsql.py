@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import bs4 as bs
 import requests
-import time
 import pymysql
 
 connection = pymysql.connect(db="hubobel",
@@ -10,14 +9,16 @@ connection = pymysql.connect(db="hubobel",
                        host='10.0.1.59',charset='utf8')
 cursor = connection.cursor()
 try:
-    cursor.execute("""CREATE TABLE test ( 
-        nr INTEGER, Filosophiefact TEXT)""")
+    cursor.execute("""CREATE TABLE Filosofie ( 
+        Nr INTEGER, Filosofie TEXT)""")
 except:
     print ('weiter')
-sql = "SELECT * FROM test ORDER BY nr DESC"
+sql = "SELECT * FROM Filosofie ORDER BY Nr DESC"
 resp = cursor.execute(sql)
-
+resp3=resp
+print(resp)
 ergebniss=''
+new=0
 
 requests.packages.urllib3.disable_warnings()
 sauce = requests.get('https://www.swr3.de/wraps/fun/filosofie/neu.php?id=11', verify=False)
@@ -38,20 +39,23 @@ while start <= anzahl:
         filosophie=(i.text)
     print(filosophie)
     print(start,' von ',anzahl)
-    sql = "INSERT INTO `test`(`nr`, `Filosophiefact`) VALUES ('" + str(start) + "','" + filosophie + "')"
-    sql_q = "SELECT * FROM test WHERE Filosophiefact like '%" + str(filosophie) + "%'"
+    sql = "INSERT INTO `Filosofie`(`Nr`, `Filosofie`) VALUES ('" + str(start) + "','" + filosophie + "')"
+    sql_q = "SELECT * FROM Filosofie WHERE Filosofie like '%" + str(filosophie) + "%'"
 
     try:
         resp = cursor.execute(sql_q)
         if resp == 0:
             try:
                 resp = cursor.execute(sql)
+                new +=1
             except:
                 print('Es gab ein Problem beim Schreiben des facts in die DB')
     except:
         None
     connection.commit()
     start +=1
+sql = "SELECT * FROM Filosofie ORDER BY Nr DESC"
+resp2 = cursor.execute(sql)
+print('Es wurden ', int(resp2)-int(resp3), ' neue Filosofien der DB hinzugefügt.')
 cursor.close()
 connection.close()
-
