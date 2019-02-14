@@ -48,6 +48,7 @@ while start <= anzahl:
             print('Es gab ein Problem beim Schreiben des facts in die DB')
     connection.commit()
     start +=1
-    time.sleep(5)
-
+    time.sleep(1)
+cursor.close()
+connection.close()
 
