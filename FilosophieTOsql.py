@@ -40,15 +40,18 @@ while start <= anzahl:
     print(start,' von ',anzahl)
     sql = "INSERT INTO `test`(`nr`, `Filosophiefact`) VALUES ('" + str(start) + "','" + filosophie + "')"
     sql_q = "SELECT * FROM test WHERE Filosophiefact like '%" + str(filosophie) + "%'"
-    resp = cursor.execute(sql_q)
-    if resp == 0:
-        try:
-            resp = cursor.execute(sql)
-        except:
-            print('Es gab ein Problem beim Schreiben des facts in die DB')
+
+    try:
+        resp = cursor.execute(sql_q)
+        if resp == 0:
+            try:
+                resp = cursor.execute(sql)
+            except:
+                print('Es gab ein Problem beim Schreiben des facts in die DB')
+    except:
+        None
     connection.commit()
     start +=1
-    time.sleep(1)
 cursor.close()
 connection.close()
 
