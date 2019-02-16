@@ -12,25 +12,20 @@ try:
     cursor.execute("""CREATE TABLE Filosofie ( 
         Nr INTEGER, Filosofie TEXT)""")
 except:
-    print ('weiter')
+    #print ('weiter')
 sql = "SELECT * FROM Filosofie ORDER BY Nr DESC"
 resp = cursor.execute(sql)
 resp3=resp
-print(resp)
+#print(resp)
 ergebniss=''
-new=0
-
 requests.packages.urllib3.disable_warnings()
 sauce = requests.get('https://www.swr3.de/wraps/fun/filosofie/neu.php?id=11', verify=False)
 soup = bs.BeautifulSoup(sauce.text, 'lxml')
-
 for i in soup.find_all('div'):
     ergebniss=ergebniss+str(i)
-
 start=(ergebniss.find('href="/wraps/fun/filosofie/neu.php?id=12"> weiter &gt; </a>   <a class="linkred" href='))
 anzahl=int(ergebniss[start+119:start+123])
-start=int(resp)+1
-
+start=int(resp)+1+110
 while start <= anzahl:
     url='https://www.swr3.de/wraps/fun/filosofie/neu.php?id='+str(start)
     sauce = requests.get(url, verify=False)
@@ -38,16 +33,14 @@ while start <= anzahl:
     for i in soup.find_all('strong'):
         filosophie=(i.text)
     print(filosophie)
-    print(start,' von ',anzahl)
+    #print(start,' von ',anzahl)
     sql = "INSERT INTO `Filosofie`(`Nr`, `Filosofie`) VALUES ('" + str(start) + "','" + filosophie + "')"
     sql_q = "SELECT * FROM Filosofie WHERE Filosofie like '%" + str(filosophie) + "%'"
-
     try:
         resp = cursor.execute(sql_q)
         if resp == 0:
             try:
                 resp = cursor.execute(sql)
-                new +=1
             except:
                 print('Es gab ein Problem beim Schreiben des facts in die DB')
     except:
