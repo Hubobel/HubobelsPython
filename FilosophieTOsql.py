@@ -16,6 +16,7 @@ except:
 sql = "SELECT * FROM Filosofie ORDER BY Nr DESC"
 resp = cursor.execute(sql)
 resp3=resp
+db=[]
 #print(resp)
 ergebniss=''
 requests.packages.urllib3.disable_warnings()
@@ -41,6 +42,7 @@ while start <= anzahl:
         if resp == 0:
             try:
                 resp = cursor.execute(sql)
+                db.append(filosophie)
             except:
                 print('Es gab ein Problem beim Schreiben des facts in die DB')
     except:
@@ -50,5 +52,8 @@ while start <= anzahl:
 sql = "SELECT * FROM Filosofie ORDER BY Nr DESC"
 resp2 = cursor.execute(sql)
 print('Es wurden ', int(resp2)-int(resp3), ' neue Filosofien der DB hinzugefügt.')
+if len(db)>0:
+    for i in db:
+        print(i)
 cursor.close()
 connection.close()
