@@ -12,7 +12,7 @@ try:
     cursor.execute("""CREATE TABLE Filosofie ( 
         Nr INTEGER, Filosofie TEXT)""")
 except:
-    #print ('weiter')
+    None
 sql = "SELECT * FROM Filosofie ORDER BY Nr DESC"
 resp = cursor.execute(sql)
 resp3=resp
