@@ -18,9 +18,9 @@ while True:
     for i in data_response['sensors']:
         try:
             if data_response['sensors'][i]['productname'] == 'Hue dimmer switch':
-                #print(data_response['sensors'][i])
+                print(data_response['sensors'][i])
 
-                states={'1002':True, '2002':'Dim up', '3002':'Dim down', '4002':False, '1000':True, '4000':False}
+                states={'1002':'On', '2002':'Dim up', '3002':'Dim down', '4002':'Off', '1000':True, '4000':False}
 
                 for a in states:
                     if str(a) == str(data_response['sensors'][i]['state']['buttonevent']):
@@ -31,7 +31,7 @@ while True:
                         try:
                             client.connect("10.0.1.59", 1884, 60)
                             client.publish(pfad, states[a])
-                            print('puplished')
+                            print('puplished',states[a])
                             client.disconnect()
                         except:
                             print('error')

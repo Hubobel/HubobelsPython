@@ -335,7 +335,7 @@ def index():
 @app.route('/facts', methods=['GET'])
 def get_tasks():
     fact, a = Update()
-    return jsonify({'facts': fact})
+    return json.dumps(fact, ensure_ascii=False, sort_keys=True, indent=4)
 
 
 @app.route('/facts/<int:task_id>', methods=['GET'])
@@ -356,7 +356,7 @@ def get_task(task_id):
     resp = (resp[0][1])
     cursor.close()
     connection.close()
-    return jsonify({'fact': resp})
+    return json.dumps(resp, ensure_ascii=False, sort_keys=True, indent=4)
 
 
 @app.route('/facts/zufall', methods=['GET'])
