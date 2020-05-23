@@ -3,12 +3,16 @@
 import requests
 import telebot
 import datetime
+import json
+from datetime import datetime as DateTime
 
 hour = datetime.datetime.now().hour
 TOKEN='680737840:AAEaa7Vxl_kZz_LWS1_S-lH6Eda7HXqu6Y4'
 ChatID='322673713'
 tb = telebot.TeleBot(TOKEN)
-
+ort = '/home/carsten/Scripts/'
+ort = ''
+Zeitstempel = DateTime.now().strftime('%Y_%m_%d_%H_%M_%S')
 antwort=''
 
 def mzwi():
@@ -16,6 +20,8 @@ def mzwi():
     resp_zitat = requests.get(url_zitat)
     data_zitat = resp_zitat.json()
     telegramm = 'Mainz - Wiesbaden\n'
+    with open(ort + str(Zeitstempel) + '_data.txt', 'w') as outfile:
+        json.dump(data_zitat, outfile)
     for i in data_zitat['departures']:
         if i['train'] == "S 8":
             if i['destination'] == 'Wiesbaden Hbf':
@@ -44,6 +50,8 @@ def wimz():
     resp_zitat = requests.get(url_zitat)
     data_zitat = resp_zitat.json()
     telegramm = 'Wiesbaden - Mainz\n'
+    with open(ort + str(Zeitstempel) + '_data.txt', 'w') as outfile:
+        json.dump(data_zitat, outfile)
     for i in data_zitat['departures']:
         if i['train'] == "S 8":
             if i['destination'] == 'Offenbach(Main)Ost':
@@ -75,6 +83,8 @@ def mzaz():
     resp_zitat = requests.get(url_zitat)
     data_zitat = resp_zitat.json()
     telegramm = 'Mainz - Alzey\n'
+    with open(ort + str(Zeitstempel) + '_data.txt', 'w') as outfile:
+        json.dump(data_zitat, outfile)
     for i in data_zitat['departures']:
         if i['train'] == "RE 13":
             if i['delayDeparture'] != None:
@@ -105,6 +115,8 @@ def azmz():
     resp_zitat = requests.get(url_zitat)
     data_zitat = resp_zitat.json()
     telegramm = 'Alzey - Mainz\n'
+    with open(ort + str(Zeitstempel) + '_data.txt', 'w') as outfile:
+        json.dump(data_zitat, outfile)
     for i in data_zitat['departures']:
         # print(i)
         if i['train'] == "RE 13":

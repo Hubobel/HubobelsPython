@@ -16,17 +16,18 @@ except:
     None
 sql = "SELECT * FROM Filosofie ORDER BY Nr DESC"
 resp = cursor.execute(sql)
-AnzahlStart=resp
-db=[]
-ergebniss=''
+AnzahlStart = resp
+db = []
+ergebniss = ''
 requests.packages.urllib3.disable_warnings()
-sauce = requests.get('https://www.swr3.de/wraps/fun/filosofie/neu.php?id=1151', verify=False)
+sauce = requests.get('https://www.swr3.de/wraps/fun/filosofie/neu.php?id=1300', verify=False)
 soup = bs.BeautifulSoup(sauce.text, 'lxml')
 for i in soup.find_all('div'):
-    ergebniss=ergebniss+str(i)
-start=(ergebniss.find('href="/wraps/fun/filosofie/neu.php?id=1152&amp;cf=42"> weiter &gt; </a>   <a class="linkred" href='))
-anzahl=int(ergebniss[start+131:start+135])
-start=int(resp)+1+110
+    ergebniss = ergebniss+str(i)
+start = (ergebniss.find('href="/wraps/fun/filosofie/neu.php?id=1152&amp;cf=42"> weiter &gt; </a>   <a class="linkred" href='))
+print(ergebniss)
+anzahl = int(ergebniss[start+131:start+135])
+start = int(resp)+1+110
 
 while start <= anzahl:
     url='https://www.swr3.de/wraps/fun/filosofie/neu.php?id='+str(start)

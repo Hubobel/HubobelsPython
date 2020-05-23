@@ -1,6 +1,7 @@
 import pymysql
 import bs4 as bs
 import requests
+import time
 
 connection = pymysql.connect(db="hubobel",
                        user="hubobel",
@@ -8,36 +9,38 @@ connection = pymysql.connect(db="hubobel",
                        host='10.0.1.59',charset='utf8')
 cursor = connection.cursor()
 
-#todo eurojackpot wieder fixen
 
 requests.packages.urllib3.disable_warnings()
-sauce = requests.get('https://www.eurojackpot.org/gewinnzahlen/', verify=False)
+sauce = requests.get('https://www.lotto24.de/webshop/product/eurojackpot/result', verify=False)
 soup = bs.BeautifulSoup(sauce.text, 'lxml')
 
 ZahlenEuro = {'Datum': '', 'Z1': '', 'Z2': '', 'Z3': '', 'Z4': '', 'Z5': '', 'Eurozahl1': '', 'Eurozahl2': ''}
 a = 1
-datum = soup.find_all('li')
-for i in datum:
-    i=str(i)
-    i = i.replace('<li>' , '').replace('</li>' , '').replace('<li class="extra">' , '')
-    if a <= 7:
-        if a<6:
-            ZahlenEuro['Z'+str(a)]=i
-        if a ==6:
-            ZahlenEuro['Eurozahl1']=i
-        if a ==7:
-            ZahlenEuro['Eurozahl2']=i
-        a +=1
+daten = soup.find_all('div', class_="winning-numbers__number")
+for i in daten:
+    #print(i.text)
+    if a <= 5:
+        ZahlenEuro['Z' + str(a)] = int(i.text)
+    elif a == 6:
+        ZahlenEuro['Eurozahl1'] = int(i.text)
+    elif a == 7:
+        ZahlenEuro['Eurozahl2'] = int(i.text)
+    a  = a + 1
 
-sauce=(soup.find_all('div', class_ ='calendar'))
-date=(soup.select_one('input[id=calendar]')['value'])
-ZahlenEuro['Datum']=date
+daten = soup.find_all('h2', class_="strong hidden-xs")
+for i in daten:
+    date = i.text
+    date = date.replace('  ', '')
+    date = date.replace('\n', '')
+
+start = (date.find('dem')) + 4
+ende = (date.find('(Alle'))
+ZahlenEuro['Datum'] = date[start:ende]
 
 requests.packages.urllib3.disable_warnings()
 sauce = requests.get('https://www.lotto24.de/webshop/product/lottonormal/result', verify=False)
 soup = bs.BeautifulSoup(sauce.text, 'lxml')
 
-# print(soup.prettify())
 Lottozahlen = {'Datum': '', 'Z1': '', 'Z2': '', 'Z3': '', 'Z4': '', 'Z5': '', 'Z6': '', 'Superzahl': '',
                'Spiel77': '', 'Super6': ''}
 daten = soup.find_all('div', class_="winning-numbers__number")
@@ -75,15 +78,15 @@ Lottozahlen['Spiel77'] = Spiel77
 Lottozahlen['Super6'] = Super6
 Lottozahlen['Datum'] = date[start:ende]
 
-#print(ZahlenEuro)
-print(Lottozahlen)
-print(date)
+
+
 
 try:
     cursor.execute("""CREATE TABLE euro ( 
         datum Text, z1 INTEGER, z2 INTEGER, z3 INTEGER, z4 INTEGER, z5 INTEGER, sz1 INTEGER, sz2 INTEGER )""")
 except:
     None
+
 data = ZahlenEuro
 sql = "INSERT INTO `euro`(`datum`, `z1`, `z2`, `z3`, `z4`, `z5`, `sz1`, `sz2`) VALUES" \
       " ('" + str(data['Datum']) + "','" + str(data['Z1']) + "','" + str(data['Z2']) + "','" + str(data['Z3']) + \
@@ -146,3 +149,10 @@ if resp == 0:
 connection.commit()
 cursor.close()
 connection.close()
+
+tag=int((time.strftime("%w")))
+if tag != 5:
+    print(Lottozahlen)
+elif tag == 7:
+    print(ZahlenEuro)
+print(ZahlenEuro)
