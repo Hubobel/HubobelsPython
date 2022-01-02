@@ -4,21 +4,28 @@ import time
 import datetime
 import os
 
-session = requests.session()
-url = 'http://www.newsblur.com/api/login'
-datas = {'username':'hubobel','password':'polier2003'}
-resp = session.post(url,datas)
-data = resp.json()
-print (data)
+url = 'http://hubobel.de/tt-rss/api/'
+pfad = os.path.dirname(__file__)
 
-
-url = 'http://www.newsblur.com/reader/refresh_feeds'
-resp = session.get(url)
+datas = '{"op":"login","user":"admin","password":"polier2003"}'
+resp = requests.post(url,datas)
 data = resp.json()
-print (json.dumps(data, indent=4))
-print (data['id'])
-url = 'http://www.newsblur.com/reader/feed/6212608'
-resp = session.get(url)
-data = resp.json()
-print (json.dumps(data, indent=4))
 print(data)
+id = str(data['content']['session_id'])
+datas = '{"sid":"'+id+'","op":"getFeeds","cat_id":-4}'
+resp = requests.post(url,datas)
+data = resp.json()
+
+for i in data['content']:
+    #print(i)
+    if int(i['unread'])>0:
+        print(i)
+
+datas = '{"sid":"'+id+'","op":"getLabels","cat_id":-4}'
+resp = requests.post(url,datas)
+data = resp.json()
+print(data['content'])
+
+
+
+

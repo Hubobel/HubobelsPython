@@ -6,14 +6,14 @@ import time
 connection = pymysql.connect(db="hubobel",
                        user="hubobel",
                        passwd="polier2003",
-                       host='10.0.1.59',charset='utf8')
+                       host='10.0.1.123',charset='utf8')
 cursor = connection.cursor()
 
 
 requests.packages.urllib3.disable_warnings()
-sauce = requests.get('https://www.lotto24.de/webshop/product/eurojackpot/result', verify=False)
+sauce = requests.get('https://lotto.web.de/webshop/product/eurojackpot/result', verify=False)
 soup = bs.BeautifulSoup(sauce.text, 'lxml')
-
+#print(soup)
 ZahlenEuro = {'Datum': '', 'Z1': '', 'Z2': '', 'Z3': '', 'Z4': '', 'Z5': '', 'Eurozahl1': '', 'Eurozahl2': ''}
 a = 1
 daten = soup.find_all('div', class_="winning-numbers__number")
@@ -26,8 +26,9 @@ for i in daten:
     elif a == 7:
         ZahlenEuro['Eurozahl2'] = int(i.text)
     a  = a + 1
-
+#print(ZahlenEuro)
 daten = soup.find_all('h2', class_="strong hidden-xs")
+#print(daten)
 for i in daten:
     date = i.text
     date = date.replace('  ', '')
@@ -36,9 +37,10 @@ for i in daten:
 start = (date.find('dem')) + 4
 ende = (date.find('(Alle'))
 ZahlenEuro['Datum'] = date[start:ende]
+#print(ZahlenEuro)
 
 requests.packages.urllib3.disable_warnings()
-sauce = requests.get('https://www.lotto24.de/webshop/product/lottonormal/result', verify=False)
+sauce = requests.get('https://lotto.web.de/webshop/product/lottonormal/result', verify=False)
 soup = bs.BeautifulSoup(sauce.text, 'lxml')
 
 Lottozahlen = {'Datum': '', 'Z1': '', 'Z2': '', 'Z3': '', 'Z4': '', 'Z5': '', 'Z6': '', 'Superzahl': '',

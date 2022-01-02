@@ -13,24 +13,31 @@ day = now.strftime("%d")
 month = now.strftime("%m")
 year = now.strftime("%Y")
 
-pfadflur="/media/cameras/flur/"+year+"/"+month+"/"+day
-pfadgarten="/media/cameras/garten/"+year+"/"+month+"/"+day
-pfadwz="/media/cameras/wz/"+year+"/"+month+"/"+day
+pfadflur="/mnt/usb/cameras/flur/"+year+"/"+month+"/"+day
+pfadgarten="/mnt/usb/cameras/garten/"+year+"/"+month+"/"+day
+pfadwz="/mnt/usb/cameras/wz/"+year+"/"+month+"/"+day
+pfadhaustuer="/mnt/usb/cameras/haustuer/"+year+"/"+month+"/"+day
 
 try:
     shutil.rmtree(pfadflur)
-    print('Lösche '+ pfadflur)
+    print('L  sche '+ pfadflur)
 except Exception as e:
     print('Beim Löschen kam es zu folgendem Fehler: ' + str(e))
 
 try:
     shutil.rmtree(pfadgarten)
-    print('Lösche '+ pfadgarten)
+    print('L  sche '+ pfadgarten)
 except Exception as e:
     print('Beim Löschen kam es zu folgendem Fehler: ' + str(e))
 
 try:
     shutil.rmtree(pfadwz)
-    print('Lösche '+ pfadwz)
+    print('L  sche '+ pfadwz)
+except Exception as e:
+    print('Beim Löschen kam es zu folgendem Fehler: ' + str(e))
+
+try:
+    shutil.rmtree(pfadhaustuer)
+    print('L  sche '+ pfadhaustuer)
 except Exception as e:
     print('Beim Löschen kam es zu folgendem Fehler: ' + str(e))

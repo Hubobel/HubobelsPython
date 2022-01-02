@@ -18,14 +18,16 @@ tb = telebot.TeleBot(TOKEN)
 url = 'http://hubobel.de/tt-rss/api/'
 pfad = os.path.dirname(__file__)
 
-datas = '{"op":"login","user":"admin","password":"password"}'
+datas = '{"op":"login","user":"admin","password":"polier2003"}'
 resp = requests.post(url,datas)
 data = resp.json()
+#print(data)
 id= str(data['content']['session_id'])
 datas = '{"sid":"'+id+'","op":"getFeeds","cat_id":-4}'
 resp = requests.post(url,datas)
 data = resp.json()
 ids=[]
+print(data)
 gefunden=[]
 laenge_start=laenge()
 
@@ -39,15 +41,17 @@ fobj.close()
 
 
 for i in data['content']:
+    print(i)
     if int(i['unread'])>0 and int(i['id'])>0:
         datas = '{"sid":"'+id+'","op":"getHeadlines","feed_id":'+str(i['id'])+'}'
         resp = requests.post(url,datas)
         feeds = resp.json()
+        print(feeds)
         for headlines in feeds['content']:
             if headlines['unread']:
                 a=0
                 b=len(suchstring)
-                if headlines['feed_id'] == '4':
+                if headlines['feed_id'] == '46':
                     article_id=str(headlines['id'])
                     datas = '{"sid":"' + id + '","op":"getArticle","article_id":'+article_id+'}'
                     resp = requests.post(url, datas)
@@ -57,12 +61,12 @@ for i in data['content']:
                     connection = pymysql.connect(db="hubobel",
                                                  user="hubobel",
                                                  passwd="polier2003",
-                                                 host='10.0.1.59', charset='utf8')
+                                                 host='10.0.1.123', charset='utf8')
                     cursor = connection.cursor()
                     sql = "SELECT * FROM facts ORDER BY nr DESC"
                     resp = cursor.execute(sql)
                     x = int(resp) + 1
-
+                    print(antwort)
                     line = antwort.replace('<p>', '')
                     line = line.replace('</p>', '')
                     sql = "INSERT INTO `facts`(`nr`, `fact`) VALUES ('" + str(x) + "','" + line + "')"

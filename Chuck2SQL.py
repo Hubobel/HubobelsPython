@@ -1,6 +1,5 @@
 # -*- coding: UTF8 -*-
 import requests
-import datetime
 import pymysql
 
 
