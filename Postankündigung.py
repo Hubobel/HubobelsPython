@@ -5,16 +5,10 @@ import json
 import sys
 
 conf = os.path.basename(sys.argv[0])
-
 conf = conf.replace(".py", ".conf")
-
-
-
 absFilePath = os.path.abspath(__file__)
 path, filename = os.path.split(absFilePath)
-conf = path + '/' +conf
-
-
+conf = path + '/' + conf
 if os.path.isfile(conf) is False:
     print(conf + ' scheint es nicht zu geben.')
     print('Ich lege eine neue Datei '+ conf + ' an.')
