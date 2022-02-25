@@ -19,8 +19,8 @@ if os.path.isfile(absFilePath) is False:
             },
         'Telegram':
             {
-                "Chat_ID": "322673713",
-                "TOKEN": "680737840:AAEaa7Vxl_kZz_LWS1_S-lH6Eda7HXqu6Y4"
+                "Chat_ID": "",
+                "TOKEN": ""
             }
         }
 
