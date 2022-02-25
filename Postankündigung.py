@@ -2,21 +2,33 @@ from imap_tools import MailBox
 import telebot
 import os
 import json
+import sys
 
-if os.path.isfile('Postankündigung.conf') is False:
-    print('"Postankündigung.conf" scheint es nicht zu geben.')
-    print('Ich lege eine neue Datei "Postankündigung.conf" an.')
+conf = os.path.basename(sys.argv[0])
+
+conf = conf.replace(".py", ".conf")
+
+
+
+absFilePath = os.path.abspath(__file__)
+path, filename = os.path.split(absFilePath)
+conf = path + '/' +conf
+
+
+if os.path.isfile(conf) is False:
+    print(conf + ' scheint es nicht zu geben.')
+    print('Ich lege eine neue Datei '+ conf + ' an.')
     passw={"mail_pass": "","mail_user": "",
            "mail_host": "",
            "mail_folder": "",
            "Chat_ID": "","TOKEN": ""
            }
-    print(str(passw)+ ' bitte entsprechend befüllen.')
-    with open('Postankündigung.conf', 'w') as fp:
+    print(str(conf)+ ' bitte entsprechend befüllen.')
+    with open(conf, 'w') as fp:
         json.dump(passw, fp, sort_keys=True, indent=4)
     quit()
 else:
-    with open('Postankündigung.conf') as file:
+    with open(conf) as file:
         passw = json.load(file)
 
 TOKEN = passw['TOKEN']
@@ -27,7 +39,6 @@ password = passw['mail_pass']
 folder = passw['mail_folder']
 
 tb = telebot.TeleBot(TOKEN)
-
 
 with MailBox(host).login(username, password, folder) as mailbox:
     anzahl = len(mailbox.numbers(criteria='UNSEEN'))
